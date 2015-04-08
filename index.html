@@ -7,6 +7,11 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
+    <div class="mixpanel-platform-section">
+      <div id="dateSelect" style="float: right;"></div>
+      <div style="clear: both;"></div>
+    </div>
+    
     <div class="row">
       <div class="col-xs-6">
         <h3>Most Watched Programs</h3>
@@ -48,8 +53,8 @@
       var eventGraph6  = $('#dashSix').MPChart({chartType: 'line'});
       
       var params = {
-          from = dateRange.from,
-          to = dateRange.to,
+          from: '2015-01-01',
+          to: '2015-01-01',
           type: 'general',
           unit: 'day'
         };
@@ -61,13 +66,16 @@
             eventName4 = 'Obding: User ends onboarding',
             eventName5 = 'Remotes: User presses remote button',
             eventName6 = 'Rec Profile: User creates an Alert',
-            propName1 = 'Watch Event',
+            propName1 = 'Event Name',
             propName2 = 'Current location',
             propName3 = 'Channel Name',
             propName4 = '$lib_version',
             propName5 = 'Device Type',
-            propName6 = 'Current Location',
+            propName6 = 'Current location',
             dateRange = dateSelect.MPDatepicker('value');
+        
+        params['from'] = dateRange.from;
+        params['to'] = dateRange.to;
 
         if (dateRange) {
           MP.api.segment(eventName1, propName1, params).done(function(results) {
@@ -92,6 +100,8 @@
       };
       
       dateSelect.on('change', runQuery);
+      
+      runQuery();
     </script>
   </body>
 </html>
